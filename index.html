@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Organizador de Rotinas de Estudo</title>
+  <title>Organizador de Rotinas - Estudo, Lazer & Trabalho</title>
   <link rel="stylesheet" href="style.css">
-  <!-- Lucide Icons para ícones modernos -->
+  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
 
-  <!-- Elementos 3D em degradê flutuando no fundo -->
+  <!-- Elementos 3D em degradê flutuando ao fundo -->
   <div class="bg-scene">
     <div class="shape notebook notebook-1">
       <div class="notebook-cover"></div>
@@ -19,6 +19,10 @@
     <div class="shape pencil pencil-1">
       <div class="pencil-body"></div>
       <div class="pencil-tip"></div>
+    </div>
+    <div class="shape bulb bulb-1">
+      <div class="bulb-glass"></div>
+      <div class="bulb-base"></div>
     </div>
     <div class="shape notebook notebook-2">
       <div class="notebook-cover"></div>
@@ -34,37 +38,50 @@
 
   <div class="container">
     <header class="header">
-      <h1 class="gradient-text">Rotina de Estudos</h1>
-      <p>Gerencie suas disciplinas, metas e horários com alta performance.</p>
-      <button class="btn-primary" onclick="openModal('add')">
-        <i data-lucide="plus"></i> Nova Rotina
-      </button>
+      <h1 class="gradient-text">Organizador de Rotinas</h1>
+      <p>Gerencie seus horários de <strong>Estudo</strong>, <strong>Lazer</strong> e <strong>Trabalho</strong> em um só lugar.</p>
+      
+      <div class="header-actions">
+        <div class="filter-group">
+          <button class="filter-btn active" onclick="filterCategory('todas', this)">Todas</button>
+          <button class="filter-btn" onclick="filterCategory('Estudo', this)">Estudos</button>
+          <button class="filter-btn" onclick="filterCategory('Trabalho', this)">Trabalho</button>
+          <button class="filter-btn" onclick="filterCategory('Lazer', this)">Lazer</button>
+        </div>
+
+        <button class="btn-primary" onclick="openModal('add')">
+          <i data-lucide="plus"></i> Nova Rotina
+        </button>
+      </div>
     </header>
 
-    <!-- Grid de Cards -->
     <main class="cards-grid" id="cardsGrid">
-      <!-- Cards serão renderizados via JavaScript -->
+      <!-- Renderizado via JavaScript -->
     </main>
   </div>
 
-  <!-- Modal para Criar/Editar/Visualizar Rotina -->
+  <!-- Modal para Criar / Editar Rotina -->
   <div class="modal-overlay" id="routineModal">
     <div class="modal-card">
       <button class="close-btn" onclick="closeModal()">&times;</button>
-      <h2 id="modalTitle" class="gradient-text">Detalhes da Rotina</h2>
+      <h2 id="modalTitle" class="gradient-text">Nova Rotina</h2>
       
       <form id="routineForm" onsubmit="handleFormSubmit(event)">
         <input type="hidden" id="routineId">
         
         <div class="form-group">
-          <label for="subject">Disciplina / Matéria</label>
-          <input type="text" id="subject" placeholder="Ex: Matemática Discreta" required>
+          <label for="title">Título / Atividade</label>
+          <input type="text" id="title" placeholder="Ex: Matemática, Almoço em Família, Expediente Tarde" required>
         </div>
 
         <div class="form-group-row">
           <div class="form-group">
-            <label for="time">Horário</label>
-            <input type="text" id="time" placeholder="Ex: 14:00 - 16:00" required>
+            <label for="category">Categoria</label>
+            <select id="category" onchange="updateSubtypeOptions()" required>
+              <option value="Estudo">Estudo</option>
+              <option value="Trabalho">Trabalho</option>
+              <option value="Lazer">Lazer</option>
+            </select>
           </div>
           <div class="form-group">
             <label for="day">Dia da Semana</label>
@@ -80,14 +97,20 @@
           </div>
         </div>
 
-        <div class="form-group">
-          <label for="topic">Tópico Principal / Foco</label>
-          <input type="text" id="topic" placeholder="Ex: Matrizes e Determinantes" required>
+        <div class="form-group-row">
+          <div class="form-group">
+            <label for="time">Horário</label>
+            <input type="text" id="time" placeholder="Ex: 13:00 - 17:00" required>
+          </div>
+          <div class="form-group">
+            <label for="subtype" id="subtypeLabel">Especificação</label>
+            <input type="text" id="subtype" placeholder="Ex: Matéria, Subcategoria ou Foco" required>
+          </div>
         </div>
 
         <div class="form-group">
-          <label for="notes">Anotações / Metas</label>
-          <textarea id="notes" rows="4" placeholder="Ex: Resolver 15 exercícios e revisar a teoria dos capítulos 3 e 4."></textarea>
+          <label for="notes">Anotações / Metas detalhadas</label>
+          <textarea id="notes" rows="3" placeholder="Detalhes da atividade, metas ou observações importantes..."></textarea>
         </div>
 
         <div class="modal-actions">
@@ -100,53 +123,57 @@
 
   <!-- JavaScript Embutido -->
   <script>
-    // Dados iniciais de exemplo
+    // Rotinas pré-definidas conforme os requisitos
     let routines = [
-      {
-        id: '1',
-        subject: 'Cálculo I',
-        time: '08:00 - 10:00',
-        day: 'Segunda-feira',
-        topic: 'Derivadas Parciais',
-        notes: 'Fazer resumos da aula anterior e resolver os problemas ímpares do livro.'
-      },
-      {
-        id: '2',
-        subject: 'Estrutura de Dados',
-        time: '14:00 - 16:30',
-        day: 'Quarta-feira',
-        topic: 'Árvores AVL e Balanceamento',
-        notes: 'Implementar o algoritmo em C++ e testar casos de borda.'
-      },
-      {
-        id: '3',
-        subject: 'Inglês Instrumental',
-        time: '19:00 - 20:00',
-        day: 'Sexta-feira',
-        topic: 'Vocabulário Técnico de TI',
-        notes: 'Leitura de 2 artigos no Medium e anotação de novos termos no Anki.'
-      }
+      // Estudos: Matéria diferente por dia
+      { id: '1', title: 'Matemática & Raciocínio', category: 'Estudo', day: 'Segunda-feira', time: '08:00 - 10:00', subtype: 'Matemática', notes: 'Resolução de exercícios e revisão de fórmulas.' },
+      { id: '2', title: 'Física Clássica', category: 'Estudo', day: 'Terça-feira', time: '08:00 - 10:00', subtype: 'Física', notes: 'Estudo de Mecânica e Leis de Newton.' },
+      { id: '3', title: 'Química Orgânica', category: 'Estudo', day: 'Quarta-feira', time: '08:00 - 10:00', subtype: 'Química', notes: 'Cadeias carbônicas e funções orgânicas.' },
+      { id: '4', title: 'História Geral', category: 'Estudo', day: 'Quinta-feira', time: '08:00 - 10:00', subtype: 'História', notes: 'Resumos sobre Idade Contemporânea.' },
+      { id: '5', title: 'Geografia & Atualidades', category: 'Estudo', day: 'Sexta-feira', time: '08:00 - 10:00', subtype: 'Geografia', notes: 'Geopolítica e leitura de notícias globais.' },
+      { id: '6', title: 'Biologia Celular', category: 'Estudo', day: 'Sábado', time: '09:00 - 11:00', subtype: 'Biologia', notes: 'Citologia e genética básica.' },
+      { id: '7', title: 'Literatura & Redação', category: 'Estudo', day: 'Domingo', time: '09:00 - 11:00', subtype: 'Português', notes: 'Escrita de redação e análise de obras.' },
+
+      // Trabalho: Tardes das 13h às 17h
+      { id: '8', title: 'Expediente da Tarde', category: 'Trabalho', day: 'Segunda-feira', time: '13:00 - 17:00', subtype: 'Foco em Projetos', notes: 'Desenvolvimento das demandas prioritárias da semana.' },
+      { id: '9', title: 'Expediente da Tarde', category: 'Trabalho', day: 'Terça-feira', time: '13:00 - 17:00', subtype: 'Reuniões & Entregas', notes: 'Alinhamentos de equipe e revisão de tarefas.' },
+      { id: '10', title: 'Expediente da Tarde', category: 'Trabalho', day: 'Quarta-feira', time: '13:00 - 17:00', subtype: 'Produção', notes: 'Execução técnica dos entregáveis.' },
+      { id: '11', title: 'Expediente da Tarde', category: 'Trabalho', day: 'Quinta-feira', time: '13:00 - 17:00', subtype: 'Relatórios & Análises', notes: 'Análise de métricas e relatórios de progresso.' },
+      { id: '12', title: 'Expediente da Tarde', category: 'Trabalho', day: 'Sexta-feira', time: '13:00 - 17:00', subtype: 'Fechamento Semanal', notes: 'Finalização de pendências e planejamento da próxima semana.' },
+
+      // Lazer: Família, Amigos e Tempo Sozinha
+      { id: '13', title: 'Almoço & Conversa em Família', category: 'Lazer', day: 'Domingo', time: '12:00 - 15:00', subtype: 'Família', notes: 'Tempo de qualidade com os familiares.' },
+      { id: '14', title: 'Encontro com Amigos', category: 'Lazer', day: 'Sábado', time: '18:00 - 21:00', subtype: 'Amigos', notes: 'Sair para conversar, lanchar ou jogar algo juntos.' },
+      { id: '15', title: 'Momento de Autocuidado', category: 'Lazer', day: 'Quarta-feira', time: '18:30 - 20:00', subtype: 'Tempo Sozinha', notes: 'Leitura por prazer, skincare ou ouvir música relaxante.' }
     ];
+
+    let currentFilter = 'todas';
 
     function renderCards() {
       const grid = document.getElementById('cardsGrid');
       grid.innerHTML = '';
 
-      if (routines.length === 0) {
-        grid.innerHTML = `<div class="empty-state">Nenhuma rotina cadastrada. Clique no botão acima para adicionar!</div>`;
+      const filtered = currentFilter === 'todas' 
+        ? routines 
+        : routines.filter(r => r.category === currentFilter);
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div class="empty-state">Nenhuma rotina cadastrada para este filtro.</div>`;
         return;
       }
 
-      routines.forEach(item => {
+      filtered.forEach(item => {
+        const categoryClass = item.category.toLowerCase();
         const card = document.createElement('div');
-        card.className = 'card';
+        card.className = `card border-${categoryClass}`;
         card.innerHTML = `
           <div class="card-header">
-            <span class="badge">${item.day}</span>
+            <span class="badge badge-${categoryClass}">${item.category}</span>
             <span class="card-time"><i data-lucide="clock"></i> ${item.time}</span>
           </div>
-          <h3 class="card-title">${item.subject}</h3>
-          <p class="card-topic"><strong>Foco:</strong> ${item.topic}</p>
+          <h3 class="card-title">${item.title}</h3>
+          <p class="card-day"><i data-lucide="calendar"></i> ${item.day}</p>
+          <p class="card-focal"><strong>Detalhe / Foco:</strong> ${item.subtype}</p>
           <p class="card-notes">${item.notes}</p>
           <div class="card-footer">
             <button class="btn-card" onclick="openModal('edit', '${item.id}')">
@@ -160,8 +187,31 @@
         grid.appendChild(card);
       });
 
-      // Recarrega os ícones Lucide
       lucide.createIcons();
+    }
+
+    function filterCategory(category, buttonEl) {
+      currentFilter = category;
+      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+      if (buttonEl) buttonEl.classList.add('active');
+      renderCards();
+    }
+
+    function updateSubtypeOptions() {
+      const cat = document.getElementById('category').value;
+      const label = document.getElementById('subtypeLabel');
+      const input = document.getElementById('subtype');
+
+      if (cat === 'Estudo') {
+        label.innerText = 'Matéria';
+        input.placeholder = 'Ex: Matemática, História...';
+      } else if (cat === 'Lazer') {
+        label.innerText = 'Tipo de Lazer';
+        input.placeholder = 'Ex: Família, Amigos ou Tempo Sozinha';
+      } else {
+        label.innerText = 'Foco do Trabalho';
+        input.placeholder = 'Ex: Projetos, Reuniões...';
+      }
     }
 
     function openModal(mode, id = null) {
@@ -173,16 +223,19 @@
         modalTitle.innerText = 'Nova Rotina';
         form.reset();
         document.getElementById('routineId').value = '';
+        updateSubtypeOptions();
       } else if (mode === 'edit' && id) {
         modalTitle.innerText = 'Editar Rotina';
         const item = routines.find(r => r.id === id);
         if (item) {
           document.getElementById('routineId').value = item.id;
-          document.getElementById('subject').value = item.subject;
-          document.getElementById('time').value = item.time;
+          document.getElementById('title').value = item.title;
+          document.getElementById('category').value = item.category;
           document.getElementById('day').value = item.day;
-          document.getElementById('topic').value = item.topic;
+          document.getElementById('time').value = item.time;
+          document.getElementById('subtype').value = item.subtype;
           document.getElementById('notes').value = item.notes;
+          updateSubtypeOptions();
         }
       }
 
@@ -190,30 +243,24 @@
     }
 
     function closeModal() {
-      const modal = document.getElementById('routineModal');
-      modal.classList.remove('active');
+      document.getElementById('routineModal').classList.remove('active');
     }
 
     function handleFormSubmit(event) {
       event.preventDefault();
 
       const id = document.getElementById('routineId').value;
-      const subject = document.getElementById('subject').value;
-      const time = document.getElementById('time').value;
+      const title = document.getElementById('title').value;
+      const category = document.getElementById('category').value;
       const day = document.getElementById('day').value;
-      const topic = document.getElementById('topic').value;
+      const time = document.getElementById('time').value;
+      const subtype = document.getElementById('subtype').value;
       const notes = document.getElementById('notes').value;
 
       if (id) {
-        // Atualiza existente
-        routines = routines.map(r => r.id === id ? { id, subject, time, day, topic, notes } : r);
+        routines = routines.map(r => r.id === id ? { id, title, category, day, time, subtype, notes } : r);
       } else {
-        // Cria novo
-        const newRoutine = {
-          id: Date.now().toString(),
-          subject, time, day, topic, notes
-        };
-        routines.push(newRoutine);
+        routines.push({ id: Date.now().toString(), title, category, day, time, subtype, notes });
       }
 
       closeModal();
@@ -221,21 +268,17 @@
     }
 
     function deleteRoutine(id) {
-      if (confirm('Deseja realmente remover esta rotina?')) {
+      if (confirm('Tem certeza de que deseja remover esta rotina?')) {
         routines = routines.filter(r => r.id !== id);
         renderCards();
       }
     }
 
-    // Fecha o modal ao clicar fora dele
     window.onclick = function(event) {
       const modal = document.getElementById('routineModal');
-      if (event.target === modal) {
-        closeModal();
-      }
+      if (event.target === modal) closeModal();
     };
 
-    // Inicialização
     document.addEventListener('DOMContentLoaded', () => {
       renderCards();
     });

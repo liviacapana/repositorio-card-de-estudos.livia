@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Organizador de Rotinas de Estudo</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Lucide Icons para ícones modernos -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- Elementos 3D em degradê flutuando no fundo -->
+  <div class="bg-scene">
+    <div class="shape notebook notebook-1">
+      <div class="notebook-cover"></div>
+      <div class="notebook-spine"></div>
+    </div>
+    <div class="shape pencil pencil-1">
+      <div class="pencil-body"></div>
+      <div class="pencil-tip"></div>
+    </div>
+    <div class="shape notebook notebook-2">
+      <div class="notebook-cover"></div>
+      <div class="notebook-spine"></div>
+    </div>
+    <div class="shape pencil pencil-2">
+      <div class="pencil-body"></div>
+      <div class="pencil-tip"></div>
+    </div>
+    <div class="shape orb orb-1"></div>
+    <div class="shape orb orb-2"></div>
+  </div>
+
+  <div class="container">
+    <header class="header">
+      <h1 class="gradient-text">Rotina de Estudos</h1>
+      <p>Gerencie suas disciplinas, metas e horários com alta performance.</p>
+      <button class="btn-primary" onclick="openModal('add')">
+        <i data-lucide="plus"></i> Nova Rotina
+      </button>
+    </header>
+
+    <!-- Grid de Cards -->
+    <main class="cards-grid" id="cardsGrid">
+      <!-- Cards serão renderizados via JavaScript -->
+    </main>
+  </div>
+
+  <!-- Modal para Criar/Editar/Visualizar Rotina -->
+  <div class="modal-overlay" id="routineModal">
+    <div class="modal-card">
+      <button class="close-btn" onclick="closeModal()">&times;</button>
+      <h2 id="modalTitle" class="gradient-text">Detalhes da Rotina</h2>
+      
+      <form id="routineForm" onsubmit="handleFormSubmit(event)">
+        <input type="hidden" id="routineId">
+        
+        <div class="form-group">
+          <label for="subject">Disciplina / Matéria</label>
+          <input type="text" id="subject" placeholder="Ex: Matemática Discreta" required>
+        </div>
+
+        <div class="form-group-row">
+          <div class="form-group">
+            <label for="time">Horário</label>
+            <input type="text" id="time" placeholder="Ex: 14:00 - 16:00" required>
+          </div>
+          <div class="form-group">
+            <label for="day">Dia da Semana</label>
+            <select id="day" required>
+              <option value="Segunda-feira">Segunda-feira</option>
+              <option value="Terça-feira">Terça-feira</option>
+              <option value="Quarta-feira">Quarta-feira</option>
+              <option value="Quinta-feira">Quinta-feira</option>
+              <option value="Sexta-feira">Sexta-feira</option>
+              <option value="Sábado">Sábado</option>
+              <option value="Domingo">Domingo</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="topic">Tópico Principal / Foco</label>
+          <input type="text" id="topic" placeholder="Ex: Matrizes e Determinantes" required>
+        </div>
+
+        <div class="form-group">
+          <label for="notes">Anotações / Metas</label>
+          <textarea id="notes" rows="4" placeholder="Ex: Resolver 15 exercícios e revisar a teoria dos capítulos 3 e 4."></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" onclick="closeModal()">Cancelar</button>
+          <button type="submit" class="btn-primary">Salvar Rotina</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- JavaScript Embutido -->
+  <script>
+    // Dados iniciais de exemplo
+    let routines = [
+      {
+        id: '1',
+        subject: 'Cálculo I',
+        time: '08:00 - 10:00',
+        day: 'Segunda-feira',
+        topic: 'Derivadas Parciais',
+        notes: 'Fazer resumos da aula anterior e resolver os problemas ímpares do livro.'
+      },
+      {
+        id: '2',
+        subject: 'Estrutura de Dados',
+        time: '14:00 - 16:30',
+        day: 'Quarta-feira',
+        topic: 'Árvores AVL e Balanceamento',
+        notes: 'Implementar o algoritmo em C++ e testar casos de borda.'
+      },
+      {
+        id: '3',
+        subject: 'Inglês Instrumental',
+        time: '19:00 - 20:00',
+        day: 'Sexta-feira',
+        topic: 'Vocabulário Técnico de TI',
+        notes: 'Leitura de 2 artigos no Medium e anotação de novos termos no Anki.'
+      }
+    ];
+
+    function renderCards() {
+      const grid = document.getElementById('cardsGrid');
+      grid.innerHTML = '';
+
+      if (routines.length === 0) {
+        grid.innerHTML = `<div class="empty-state">Nenhuma rotina cadastrada. Clique no botão acima para adicionar!</div>`;
+        return;
+      }
+
+      routines.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <div class="card-header">
+            <span class="badge">${item.day}</span>
+            <span class="card-time"><i data-lucide="clock"></i> ${item.time}</span>
+          </div>
+          <h3 class="card-title">${item.subject}</h3>
+          <p class="card-topic"><strong>Foco:</strong> ${item.topic}</p>
+          <p class="card-notes">${item.notes}</p>
+          <div class="card-footer">
+            <button class="btn-card" onclick="openModal('edit', '${item.id}')">
+              <i data-lucide="edit-3"></i> Editar
+            </button>
+            <button class="btn-card btn-delete" onclick="deleteRoutine('${item.id}')">
+              <i data-lucide="trash-2"></i> Excluir
+            </button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+      // Recarrega os ícones Lucide
+      lucide.createIcons();
+    }
+
+    function openModal(mode, id = null) {
+      const modal = document.getElementById('routineModal');
+      const form = document.getElementById('routineForm');
+      const modalTitle = document.getElementById('modalTitle');
+
+      if (mode === 'add') {
+        modalTitle.innerText = 'Nova Rotina';
+        form.reset();
+        document.getElementById('routineId').value = '';
+      } else if (mode === 'edit' && id) {
+        modalTitle.innerText = 'Editar Rotina';
+        const item = routines.find(r => r.id === id);
+        if (item) {
+          document.getElementById('routineId').value = item.id;
+          document.getElementById('subject').value = item.subject;
+          document.getElementById('time').value = item.time;
+          document.getElementById('day').value = item.day;
+          document.getElementById('topic').value = item.topic;
+          document.getElementById('notes').value = item.notes;
+        }
+      }
+
+      modal.classList.add('active');
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('routineModal');
+      modal.classList.remove('active');
+    }
+
+    function handleFormSubmit(event) {
+      event.preventDefault();
+
+      const id = document.getElementById('routineId').value;
+      const subject = document.getElementById('subject').value;
+      const time = document.getElementById('time').value;
+      const day = document.getElementById('day').value;
+      const topic = document.getElementById('topic').value;
+      const notes = document.getElementById('notes').value;
+
+      if (id) {
+        // Atualiza existente
+        routines = routines.map(r => r.id === id ? { id, subject, time, day, topic, notes } : r);
+      } else {
+        // Cria novo
+        const newRoutine = {
+          id: Date.now().toString(),
+          subject, time, day, topic, notes
+        };
+        routines.push(newRoutine);
+      }
+
+      closeModal();
+      renderCards();
+    }
+
+    function deleteRoutine(id) {
+      if (confirm('Deseja realmente remover esta rotina?')) {
+        routines = routines.filter(r => r.id !== id);
+        renderCards();
+      }
+    }
+
+    // Fecha o modal ao clicar fora dele
+    window.onclick = function(event) {
+      const modal = document.getElementById('routineModal');
+      if (event.target === modal) {
+        closeModal();
+      }
+    };
+
+    // Inicialização
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCards();
+    });
+  </script>
+</body>
+</html>

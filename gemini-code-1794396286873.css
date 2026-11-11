@@ -1,0 +1,466 @@
+/* Reset & Variáveis de Cores (Amarelo, Laranja, Vermelho em Degradê) */
+:root {
+  --bg-dark: #0a0a0c;
+  --card-bg: rgba(22, 22, 28, 0.75);
+  --border-color: rgba(255, 255, 255, 0.08);
+  --text-main: #f3f4f6;
+  --text-muted: #9ca3af;
+  
+  /* Palette Gradiente: Amarelo (#ffcc00) -> Laranja (#ff6600) -> Vermelho (#ff0044) */
+  --grad-yellow: #ffcc00;
+  --grad-orange: #ff6600;
+  --grad-red: #ff0044;
+  --gradient-accent: linear-gradient(135deg, var(--grad-yellow), var(--grad-orange), var(--grad-red));
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Texto em Gradient */
+.gradient-text {
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Container Principal */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  position: relative;
+  z-index: 10;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.header h1 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin-bottom: 10px;
+}
+
+.header p {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  margin-bottom: 25px;
+}
+
+/* Botões */
+.btn-primary {
+  background: var(--gradient-accent);
+  color: #fff;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 20px rgba(255, 102, 0, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(255, 0, 68, 0.6);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Grid de Cards */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 25px;
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 0;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
+/* Card Estilo Glassmorphism / Moderno */
+.card {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255, 102, 0, 0.5);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 102, 0, 0.2);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.badge {
+  background: var(--gradient-accent);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.card-time {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.card-time svg {
+  width: 14px;
+  height: 14px;
+}
+
+.card-title {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.card-topic {
+  font-size: 0.95rem;
+  color: var(--text-main);
+  margin-bottom: 10px;
+}
+
+.card-notes {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 20px;
+  flex-grow: 1;
+}
+
+.card-footer {
+  display: flex;
+  gap: 10px;
+  border-top: 1px solid var(--border-color);
+  padding-top: 15px;
+}
+
+.btn-card {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: color 0.2s;
+}
+
+.btn-card:hover {
+  color: var(--grad-yellow);
+}
+
+.btn-card.btn-delete:hover {
+  color: var(--grad-red);
+}
+
+.btn-card svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal-card {
+  background: #121218;
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  width: 90%;
+  max-width: 500px;
+  padding: 30px;
+  position: relative;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 20px rgba(255, 102, 0, 0.15);
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+}
+
+.modal-overlay.active .modal-card {
+  transform: translateY(0);
+}
+
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.8rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.close-btn:hover {
+  color: #fff;
+}
+
+.modal-card h2 {
+  margin-bottom: 20px;
+  font-size: 1.6rem;
+}
+
+.form-group {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: #fff;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.form-group select option {
+  background: #121218;
+  color: #fff;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--grad-orange);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+/* ==============================================
+   OBJETOS 3D EM DEGRADÊ FLUTUANDO AO FUNDO
+   ============================================== */
+.bg-scene {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+  perspective: 1000px;
+}
+
+.shape {
+  position: absolute;
+  transform-style: preserve-3d;
+  animation: float 12s infinite ease-in-out alternate;
+}
+
+/* Cadernos 3D */
+.notebook {
+  width: 100px;
+  height: 130px;
+}
+
+.notebook-cover {
+  width: 100%;
+  height: 100%;
+  background: var(--gradient-accent);
+  border-radius: 6px 12px 12px 6px;
+  box-shadow: 15px 15px 35px rgba(255, 0, 68, 0.3),
+              inset -2px -2px 10px rgba(0,0,0,0.4);
+  transform: rotateY(-20deg) rotateX(15deg);
+}
+
+.notebook-spine {
+  position: absolute;
+  left: -10px;
+  top: 0;
+  width: 15px;
+  height: 100%;
+  background: #ffcc00;
+  border-radius: 4px 0 0 4px;
+  transform: rotateY(70deg);
+}
+
+/* Lápis 3D */
+.pencil {
+  width: 20px;
+  height: 140px;
+}
+
+.pencil-body {
+  width: 100%;
+  height: 80%;
+  background: var(--gradient-accent);
+  border-radius: 4px;
+  box-shadow: 10px 10px 25px rgba(255, 102, 0, 0.4);
+}
+
+.pencil-tip {
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 25px solid #ffcc00;
+  margin: 0 auto;
+}
+
+/* Esferas Iluminadas 3D ao Fundo */
+.orb {
+  border-radius: 50%;
+  background: var(--gradient-accent);
+  filter: blur(40px);
+  opacity: 0.25;
+}
+
+/* Posicionamento e Variações das Animações 3D */
+.notebook-1 {
+  top: 15%;
+  left: 8%;
+  animation-duration: 14s;
+}
+
+.notebook-2 {
+  bottom: 12%;
+  right: 10%;
+  transform: scale(1.2) rotate(25deg);
+  animation-duration: 18s;
+  animation-delay: -4s;
+}
+
+.pencil-1 {
+  top: 25%;
+  right: 15%;
+  transform: rotate(45deg);
+  animation-duration: 10s;
+  animation-delay: -2s;
+}
+
+.pencil-2 {
+  bottom: 20%;
+  left: 12%;
+  transform: rotate(-35deg) scale(0.8);
+  animation-duration: 16s;
+  animation-delay: -5s;
+}
+
+.orb-1 {
+  width: 300px;
+  height: 300px;
+  top: -50px;
+  left: -50px;
+}
+
+.orb-2 {
+  width: 400px;
+  height: 400px;
+  bottom: -100px;
+  right: -100px;
+}
+
+/* Keyframes de Flutuação e Rotação 3D */
+@keyframes float {
+  0% {
+    transform: translateY(0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  }
+  50% {
+    transform: translateY(-25px) rotateX(15deg) rotateY(20deg) rotateZ(10deg);
+  }
+  100% {
+    transform: translateY(20px) rotateX(-10deg) rotateY(-15deg) rotateZ(-8deg);
+  }
+}

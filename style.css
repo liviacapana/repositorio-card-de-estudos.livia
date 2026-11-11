@@ -1,12 +1,13 @@
-/* Reset & Variáveis de Cores (Amarelo, Laranja, Vermelho em Degradê) */
+/* Variáveis com Fundo Amarelo Manteiga e Objetos em Degradê Amarelo/Laranja/Vermelho */
 :root {
-  --bg-dark: #0a0a0c;
-  --card-bg: rgba(22, 22, 28, 0.75);
-  --border-color: rgba(255, 255, 255, 0.08);
-  --text-main: #f3f4f6;
-  --text-muted: #9ca3af;
-  
-  /* Palette Gradiente: Amarelo (#ffcc00) -> Laranja (#ff6600) -> Vermelho (#ff0044) */
+  --bg-butter: #fdf6e2;
+  --bg-butter-dark: #f5eaaf;
+  --card-bg: rgba(255, 253, 245, 0.85);
+  --border-color: rgba(210, 160, 60, 0.25);
+  --text-main: #2d241e;
+  --text-muted: #786658;
+
+  /* Degradê Tridimensional: Amarelo (#ffcc00) -> Laranja (#ff6600) -> Vermelho (#ff0044) */
   --grad-yellow: #ffcc00;
   --grad-orange: #ff6600;
   --grad-red: #ff0044;
@@ -17,18 +18,18 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 body {
-  background-color: var(--bg-dark);
+  background-color: var(--bg-butter);
   color: var(--text-main);
   min-height: 100vh;
   overflow-x: hidden;
   position: relative;
 }
 
-/* Texto em Gradient */
+/* Texto em Degradê */
 .gradient-text {
   background: var(--gradient-accent);
   -webkit-background-clip: text;
@@ -37,7 +38,7 @@ body {
 
 /* Container Principal */
 .container {
-  max-width: 1100px;
+  max-width: 1140px;
   margin: 0 auto;
   padding: 40px 20px;
   position: relative;
@@ -47,20 +48,60 @@ body {
 /* Header */
 .header {
   text-align: center;
-  margin-bottom: 50px;
+  margin-bottom: 45px;
 }
 
 .header h1 {
   font-size: 2.8rem;
   font-weight: 800;
   letter-spacing: -1px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .header p {
   color: var(--text-muted);
   font-size: 1.1rem;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
+}
+
+.header-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* Filtros */
+.filter-group {
+  display: flex;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.04);
+  padding: 6px;
+  border-radius: 14px;
+  border: 1px solid var(--border-color);
+}
+
+.filter-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+  color: var(--text-main);
+}
+
+.filter-btn.active {
+  background: var(--gradient-accent);
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(255, 102, 0, 0.3);
 }
 
 /* Botões */
@@ -68,25 +109,25 @@ body {
   background: var(--gradient-accent);
   color: #fff;
   border: none;
-  padding: 12px 28px;
+  padding: 12px 26px;
   border-radius: 30px;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.95rem;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  box-shadow: 0 4px 20px rgba(255, 102, 0, 0.4);
+  box-shadow: 0 4px 20px rgba(255, 102, 0, 0.35);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 25px rgba(255, 0, 68, 0.6);
+  box-shadow: 0 6px 25px rgba(255, 0, 68, 0.45);
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.06);
   color: var(--text-main);
   border: 1px solid var(--border-color);
   padding: 10px 20px;
@@ -97,7 +138,7 @@ body {
 }
 
 .btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.12);
 }
 
 /* Grid de Cards */
@@ -115,7 +156,7 @@ body {
   font-size: 1.1rem;
 }
 
-/* Card Estilo Glassmorphism / Moderno */
+/* Cards com Glassmorphism Claro */
 .card {
   background: var(--card-bg);
   backdrop-filter: blur(12px);
@@ -126,24 +167,24 @@ body {
   display: flex;
   flex-direction: column;
   position: relative;
+  box-shadow: 0 8px 24px rgba(180, 140, 60, 0.12);
   transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
   transform: translateY(-5px);
-  border-color: rgba(255, 102, 0, 0.5);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 102, 0, 0.2);
+  border-color: rgba(255, 102, 0, 0.4);
+  box-shadow: 0 14px 30px rgba(180, 120, 40, 0.2);
 }
 
 .card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
 .badge {
-  background: var(--gradient-accent);
   color: #fff;
   font-size: 0.75rem;
   font-weight: 700;
@@ -151,6 +192,7 @@ body {
   border-radius: 20px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  background: var(--gradient-accent);
 }
 
 .card-time {
@@ -158,21 +200,30 @@ body {
   color: var(--text-muted);
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
 }
 
-.card-time svg {
+.card-time svg, .card-day svg {
   width: 14px;
   height: 14px;
 }
 
 .card-title {
-  font-size: 1.4rem;
-  margin-bottom: 10px;
-  color: #fff;
+  font-size: 1.35rem;
+  margin-bottom: 6px;
+  color: var(--text-main);
 }
 
-.card-topic {
+.card-day {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.card-focal {
   font-size: 0.95rem;
   color: var(--text-main);
   margin-bottom: 10px;
@@ -188,7 +239,7 @@ body {
 
 .card-footer {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   border-top: 1px solid var(--border-color);
   padding-top: 15px;
 }
@@ -206,7 +257,7 @@ body {
 }
 
 .btn-card:hover {
-  color: var(--grad-yellow);
+  color: var(--grad-orange);
 }
 
 .btn-card.btn-delete:hover {
@@ -225,7 +276,7 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(45, 36, 30, 0.6);
   backdrop-filter: blur(8px);
   display: flex;
   justify-content: center;
@@ -242,14 +293,14 @@ body {
 }
 
 .modal-card {
-  background: #121218;
+  background: #fffdf7;
   border: 1px solid var(--border-color);
   border-radius: 20px;
   width: 90%;
-  max-width: 500px;
+  max-width: 520px;
   padding: 30px;
   position: relative;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 20px rgba(255, 102, 0, 0.15);
+  box-shadow: 0 20px 50px rgba(100, 70, 20, 0.25);
   transform: translateY(20px);
   transition: transform 0.3s ease;
 }
@@ -260,18 +311,17 @@ body {
 
 .close-btn {
   position: absolute;
-  top: 20px;
+  top: 18px;
   right: 20px;
   background: none;
   border: none;
   color: var(--text-muted);
   font-size: 1.8rem;
   cursor: pointer;
-  line-height: 1;
 }
 
 .close-btn:hover {
-  color: #fff;
+  color: var(--text-main);
 }
 
 .modal-card h2 {
@@ -300,19 +350,19 @@ body {
 .form-group input,
 .form-group select,
 .form-group textarea {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.03);
   border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 10px 14px;
-  color: #fff;
+  color: var(--text-main);
   font-size: 0.95rem;
   outline: none;
   transition: border-color 0.2s;
 }
 
 .form-group select option {
-  background: #121218;
-  color: #fff;
+  background: #fffdf7;
+  color: var(--text-main);
 }
 
 .form-group input:focus,
@@ -349,10 +399,10 @@ body {
   animation: float 12s infinite ease-in-out alternate;
 }
 
-/* Cadernos 3D */
+/* Caderno 3D */
 .notebook {
-  width: 100px;
-  height: 130px;
+  width: 90px;
+  height: 120px;
 }
 
 .notebook-cover {
@@ -360,26 +410,26 @@ body {
   height: 100%;
   background: var(--gradient-accent);
   border-radius: 6px 12px 12px 6px;
-  box-shadow: 15px 15px 35px rgba(255, 0, 68, 0.3),
-              inset -2px -2px 10px rgba(0,0,0,0.4);
+  box-shadow: 15px 15px 35px rgba(255, 0, 68, 0.25),
+              inset -2px -2px 10px rgba(0,0,0,0.3);
   transform: rotateY(-20deg) rotateX(15deg);
 }
 
 .notebook-spine {
   position: absolute;
-  left: -10px;
+  left: -8px;
   top: 0;
-  width: 15px;
+  width: 12px;
   height: 100%;
-  background: #ffcc00;
+  background: var(--grad-yellow);
   border-radius: 4px 0 0 4px;
   transform: rotateY(70deg);
 }
 
 /* Lápis 3D */
 .pencil {
-  width: 20px;
-  height: 140px;
+  width: 18px;
+  height: 130px;
 }
 
 .pencil-body {
@@ -387,80 +437,61 @@ body {
   height: 80%;
   background: var(--gradient-accent);
   border-radius: 4px;
-  box-shadow: 10px 10px 25px rgba(255, 102, 0, 0.4);
+  box-shadow: 10px 10px 25px rgba(255, 102, 0, 0.3);
 }
 
 .pencil-tip {
   width: 0;
   height: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-top: 25px solid #ffcc00;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 22px solid var(--grad-yellow);
   margin: 0 auto;
 }
 
-/* Esferas Iluminadas 3D ao Fundo */
+/* Elemento Intelectual 3D (Lâmpada / Ideia) */
+.bulb {
+  width: 60px;
+  height: 90px;
+}
+
+.bulb-glass {
+  width: 60px;
+  height: 60px;
+  background: var(--gradient-accent);
+  border-radius: 50%;
+  box-shadow: 0 0 30px rgba(255, 204, 0, 0.5);
+}
+
+.bulb-base {
+  width: 26px;
+  height: 25px;
+  background: #665;
+  margin: -8px auto 0 auto;
+  border-radius: 0 0 8px 8px;
+}
+
+/* Esferas Iluminadas */
 .orb {
   border-radius: 50%;
   background: var(--gradient-accent);
-  filter: blur(40px);
-  opacity: 0.25;
+  filter: blur(60px);
+  opacity: 0.18;
 }
 
-/* Posicionamento e Variações das Animações 3D */
-.notebook-1 {
-  top: 15%;
-  left: 8%;
-  animation-duration: 14s;
-}
+/* Posicionamentos */
+.notebook-1 { top: 12%; left: 6%; animation-duration: 14s; }
+.notebook-2 { bottom: 10%; right: 8%; transform: scale(1.1) rotate(25deg); animation-duration: 17s; animation-delay: -4s; }
+.pencil-1 { top: 22%; right: 12%; transform: rotate(45deg); animation-duration: 11s; animation-delay: -2s; }
+.pencil-2 { bottom: 18%; left: 10%; transform: rotate(-35deg) scale(0.85); animation-duration: 15s; animation-delay: -5s; }
+.bulb-1 { top: 50%; right: 5%; transform: rotate(15deg); animation-duration: 13s; animation-delay: -3s; }
 
-.notebook-2 {
-  bottom: 12%;
-  right: 10%;
-  transform: scale(1.2) rotate(25deg);
-  animation-duration: 18s;
-  animation-delay: -4s;
-}
+.orb-1 { width: 350px; height: 350px; top: -60px; left: -60px; }
+.orb-2 { width: 450px; height: 450px; bottom: -120px; right: -120px; }
 
-.pencil-1 {
-  top: 25%;
-  right: 15%;
-  transform: rotate(45deg);
-  animation-duration: 10s;
-  animation-delay: -2s;
-}
-
-.pencil-2 {
-  bottom: 20%;
-  left: 12%;
-  transform: rotate(-35deg) scale(0.8);
-  animation-duration: 16s;
-  animation-delay: -5s;
-}
-
-.orb-1 {
-  width: 300px;
-  height: 300px;
-  top: -50px;
-  left: -50px;
-}
-
-.orb-2 {
-  width: 400px;
-  height: 400px;
-  bottom: -100px;
-  right: -100px;
-}
-
-/* Keyframes de Flutuação e Rotação 3D */
+/* Animação Tridimensional */
 @keyframes float {
-  0% {
-    transform: translateY(0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
-  }
-  50% {
-    transform: translateY(-25px) rotateX(15deg) rotateY(20deg) rotateZ(10deg);
-  }
-  100% {
-    transform: translateY(20px) rotateX(-10deg) rotateY(-15deg) rotateZ(-8deg);
-  }
+  0% { transform: translateY(0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+  50% { transform: translateY(-25px) rotateX(15deg) rotateY(20deg) rotateZ(10deg); }
+  100% { transform: translateY(20px) rotateX(-10deg) rotateY(-15deg) rotateZ(-8deg); }
 }
